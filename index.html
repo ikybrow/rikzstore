@@ -3,155 +3,324 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Web Interaktif Gelap</title>
+  <title>Digital Store PRO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
-    * { box-sizing: border-box; }
-    body, html {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
-      background: #0f0f0f;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0f172a;
       color: white;
+      opacity: 0;
+      animation: fadeInBody 1s ease forwards;
     }
 
-    /* Splash Intro */
-    #splash {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      animation: fadeOut 2s ease 4s forwards;
-    }
-
-    #splash h1 {
-      font-size: 2em;
-      animation: typing 2s steps(20, end), blink .75s step-end infinite;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #00ffff;
-    }
-
-    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-    @keyframes typing { from { width: 0 } to { width: 100% } }
-    @keyframes blink { 50% { border-color: transparent } }
-
-    header, section {
-      padding: 60px 20px 100px;
+    header {
+      background-color: #1e293b;
+      padding: 20px;
       text-align: center;
-      display: none;
-      animation: fadeInUp 0.8s ease-out;
+      animation: slideDown 0.6s ease;
     }
 
-    header.active, section.active { display: block; }
+    header h1 {
+      color: #0ea5e9;
+      font-size: 24px;
+    }
+
+    #pageTitle {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-top: 5px;
+    }
 
     nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      justify-content: space-around;
-      padding: 15px 0;
-      z-index: 10;
-      border-top: 2px solid #00ffff;
-    }
-
-    nav button {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    nav button:hover {
-      color: #00ffff;
-      transform: scale(1.2);
-    }
-
-    ul { list-style: none; padding: 0; }
-    li {
-      background: rgba(255,255,255,0.08);
-      margin: 10px auto;
+      background-color: #1e293b;
       padding: 10px;
-      width: 90%;
-      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      animation: fadeInNav 1s ease;
     }
 
-    a { color: #00ffff; text-decoration: none; }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    nav a:hover,
+    nav a.active {
+      color: #facc15;
+    }
+
+    nav a::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: #facc15;
+      transition: width .3s;
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+
+    section {
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      filter: blur(8px);
+      transition: all 0.6s ease;
+      display: none;
+    }
+
+    section.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+      display: block;
+    }
+
+    .card {
+      background-color: #1e293b;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideUpCard 0.5s ease forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.2s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+
+    .card h3 {
+      color: #0ea5e9;
+    }
+
+    .card p {
+      margin: 10px 0;
+    }
+
+    .price {
+      color: #facc15;
+      font-weight: bold;
+    }
+
+    .button {
+      background-color: #0ea5e9;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.3s;
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #0284c7;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeInBody {
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInNav {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUpCard {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 999;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background-color: #1e293b;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .modal.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal h4 {
+      margin-bottom: 15px;
+      color: #facc15;
+      text-align: center;
+    }
+
+    .modal button {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      background-color: #0ea5e9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .modal button:hover {
+      background-color: #0284c7;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Digital Rikzz Store</h1>
+    <div id="pageTitle">Beranda</div>
+  </header>
 
-<!-- Musik -->
-<audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-summer.mp3" type="audio/mpeg">
-</audio>
+  <nav>
+    <a href="#" onclick="showSection('home')" class="active">Beranda</a>
+    <a href="#" onclick="showSection('info')">Info</a>
+  </nav>
 
-<!-- Suara Klik -->
-<audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+  <section id="homeSection" class="active">
+    <div class="card">
+      <h3>APK Suntik All Sosmed</h3>
+      <p>Jual APK suntik semua platform sosial media.</p>
+      <p class="price">Rp 10.000</p>
+      <a class="button" onclick="openModal('APK Suntik All Sosmed', 'Rp 10.000')">Pesan</a>
+    </div>
 
-<!-- Splash / Intro -->
-<div id="splash">
-  <h1>SELAMAT DATANG...</h1>
-</div>
+    <div class="card">
+      <h3>Sewa Bot Premium</h3>
+      <p>Sewa bot full fitur mulai 10K - 60K.</p>
+      <p class="price">Rp 10.000– 60.000</p>
+      <a class="button" onclick="openModal('Sewa Bot Premium', 'Rp 10.000 – 60.000')">Pesan</a>
+    </div>
 
-<!-- Halaman Sambutan -->
-<header id="sambutan" class="active">
-  <h1>Selamat Datang di Rikzstore !</h1>
-  <p>Silakan gunakan menu di bawah untuk menjelajah.</p>
-</header>
+    <div class="card">
+      <h3>Jasa Bug Nomor</h3>
+      <p>Delay Hard: 2K | Foreclose: 4K | Auto R: 5K | Virus Stik: 5K</p>
+      <p class="price">Mulai Rp 2.000</p>
+      <a class="button" onclick="openModal('Jasa Bug Nomor', 'Mulai Rp 2.000')">Pesan</a>
+    </div>
+  </section>
 
-<!-- Isi Menu -->
-<section id="menu">
-  <h2>Daftar Menu</h2>
-  <ul>
-    <li>Suntik Sosmed</li>
-    <li>Penyewaan Bot wa</li>
-    <p> Jika berminat, Silahkan menghubungi nomor owner
-  </ul>
-</section>
+  <section id="infoSection">
+    <div class="card">
+      <h3>Info Toko</h3>
+      <p>
+        Selamat datang di <strong>Digital Rikzz Store</strong>, pusat layanan digital terpercaya dan berkualitas. Kami menyediakan berbagai kebutuhan digital seperti jasa suntik APK semua sosmed, penyewaan bot premium, hingga layanan bug nomor dengan harga terjangkau. 
+        <br><br>
+        Kepuasan pelanggan adalah prioritas kami, oleh karena itu setiap layanan akan diproses cepat dan profesional. Jangan ragu untuk menghubungi kami melalui saluran resmi atau langsung via WhatsApp. Terima kasih telah mempercayakan kebutuhan digital Anda kepada kami.
+      </p>
+      <p style="margin-top: 15px;">
+        <a href="https://whatsapp.com/channel/0029Vb2cITjGufIu0CVNUj3m" class="button" target="_blank">Saluran Resmi</a>
+        <a href="https://wa.me/6282141903060" class="button" style="margin-left: 10px;" target="_blank">Kontak Owner</a>
+      </p>
+    </div>
+  </section>
 
-<!-- Kontak Owner -->
-<section id="kontak">
-  <h2>Kontak Owner</h2>
-  <p>Hubungi kami via WhatsApp:
-    <a href="https://wa.me/6282141903060?text=bang+mau+sewa+Bot/suntik+sosmed+wa">Contact Owner</a>
-  </p>
-</section>
+  <div class="modal-overlay" onclick="closeModal()"></div>
+  <div class="modal" id="paymentModal">
+    <span class="close-btn" onclick="closeModal()">×</span>
+    <h4>Pilih Metode Pembayaran</h4>
+    <div id="paymentOptions"></div>
+  </div>
 
-<!-- Navigasi -->
-<nav>
-  <button onclick="navigasi('sambutan')">Sambutan</button>
-  <button onclick="navigasi('menu')">Menu</button>
-  <button onclick="navigasi('kontak')">Kontak</button>
-</nav>
+  <script>
+    function showSection(section) {
+      const home = document.getElementById('homeSection');
+      const info = document.getElementById('infoSection');
+      const title = document.getElementById('pageTitle');
+      const navLinks = document.querySelectorAll('nav a');
 
-<script>
-  function navigasi(id) {
-    document.querySelectorAll('header, section').forEach(el => el.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.getElementById('clickSound').play();
-  }
+      if (section === 'home') {
+        home.classList.add('active');
+        info.classList.remove('active');
+        title.innerText = 'Beranda';
+        navLinks[0].classList.add('active');
+        navLinks[1].classList.remove('active');
+      } else {
+        home.classList.remove('active');
+        info.classList.add('active');
+        title.innerText = 'Info';
+        navLinks[0].classList.remove('active');
+        navLinks[1].classList.add('active');
+      }
+    }
 
-  // Sembunyikan splash setelah 4 detik
-  window.onload = function () {
-    setTimeout(() => {
-      document.getElementById('splash').style.display = 'none';
-      document.getElementById('sambutan').classList.add('active');
-    }, 4000);
-  };
-</script>
+    function openModal(service, price) {
+      const methods = ['DANA', 'OVO', 'QRIS', 'SEABANK'];
+      const container = document.getElementById('paymentOptions');
+      container.innerHTML = '';
 
+      methods.forEach(method => {
+        const btn = document.createElement('button');
+        const text = `🛒 Order Digital Rikzz Store\n\n*Layanan:* ${service}\n*Harga:* ${price}\n*Pembayaran:* ${method}\n\nMohon diproses, Admin. Terima kasih 🙏`;
+        const url = `https://wa.me/6282141903060?text=${encodeURIComponent(text)}`;
+        btn.innerText = method;
+        btn.onclick = () => window.open(url, '_blank');
+        container.appendChild(btn);
+      });
+
+      document.querySelector('.modal-overlay').style.display = 'block';
+      document.getElementById('paymentModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.querySelector('.modal-overlay').style.display = 'none';
+      document.getElementById('paymentModal').classList.remove('show');
+    }
+  </script>
 </body>
 </html>
